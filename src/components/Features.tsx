@@ -10,7 +10,7 @@ const features = [
   },
   {
     title: 'HTTPS Included',
-    description: 'Automatic wildcard SSL certificates via Let's Encrypt for all subdomains.',
+    description: "Automatic wildcard SSL certificates via Let's Encrypt for all subdomains.",
     icon: FileCheck,
   },
   {
