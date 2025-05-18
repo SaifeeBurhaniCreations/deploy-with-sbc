@@ -1,6 +1,5 @@
 
-import React from 'react';
-import { ArrowUp, Code, Globe, Server } from 'lucide-react';
+import { ArrowUp, Code, Globe, Server, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const stats = [

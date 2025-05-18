@@ -110,7 +110,7 @@ const Monitor = () => {
   }, [deployments]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" style={{overflowY: "auto", maxHeight: "85vh"}}>
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">Monitor</h1>

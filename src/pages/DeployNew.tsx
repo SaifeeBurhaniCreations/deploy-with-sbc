@@ -58,7 +58,7 @@ const DeployNew = () => {
         <p className="text-slate-600">Configure and deploy a new app to SBC-Deploy</p>
       </div>
       
-      <Card>
+      <Card style={{width: "50vw"}}>
         <CardHeader>
           <CardTitle>Deployment Configuration</CardTitle>
           <CardDescription>
