@@ -13,6 +13,10 @@ import DeploymentStatus from "./pages/DeploymentStatus";
 import AdminDashboard from "./pages/AdminDashboard";
 import Monitor from "./pages/Monitor";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
+import EditDeploymentSettings from "./pages/EditDeploymentSettings";
+import ConfigureDomain from "./pages/ConfigureDomain";
+import SitePreview from "./pages/SitePreview";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +28,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
           
           {/* Dashboard Routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
@@ -33,6 +38,9 @@ const App = () => (
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="monitor" element={<Monitor />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="edit-settings" element={<EditDeploymentSettings />} />
+            <Route path="domain" element={<ConfigureDomain />} />
+            <Route path="preview" element={<SitePreview />} />
           </Route>
           
           {/* 404 Route */}
