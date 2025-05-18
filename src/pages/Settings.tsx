@@ -41,7 +41,7 @@ const Settings = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6"  style={{overflowY: "auto", maxHeight: "85vh"}}>
       <div>
         <h1 className="text-2xl font-bold">Settings</h1>
         <p className="text-slate-600">Configure your deployment settings</p>
