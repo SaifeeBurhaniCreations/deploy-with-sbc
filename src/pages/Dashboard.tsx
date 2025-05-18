@@ -1,5 +1,4 @@
-
-import { ArrowUp, Code, Globe, Server, Users } from 'lucide-react';
+import { ArrowUp, Code, Globe, Server, User } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const stats = [
@@ -13,7 +12,7 @@ const stats = [
     title: 'Total Clients',
     value: '8',
     change: '+2',
-    icon: Users,
+    icon: User,
   },
   {
     title: 'Success Rate',

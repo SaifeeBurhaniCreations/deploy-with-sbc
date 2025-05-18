@@ -12,6 +12,7 @@ import DeployNew from "./pages/DeployNew";
 import DeploymentStatus from "./pages/DeploymentStatus";
 import AdminDashboard from "./pages/AdminDashboard";
 import Monitor from "./pages/Monitor";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="deployment/:id" element={<DeploymentStatus />} />
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="monitor" element={<Monitor />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
           
           {/* 404 Route */}
