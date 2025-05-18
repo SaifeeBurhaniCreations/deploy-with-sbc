@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,6 +6,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Dashboard from "./pages/Dashboard";
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import DeployNew from "./pages/DeployNew";
+import DeploymentStatus from "./pages/DeploymentStatus";
+import AdminDashboard from "./pages/AdminDashboard";
+import Monitor from "./pages/Monitor";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +23,17 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          
+          {/* Dashboard Routes */}
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="deploy" element={<DeployNew />} />
+            <Route path="deployment/:id" element={<DeploymentStatus />} />
+            <Route path="admin" element={<AdminDashboard />} />
+            <Route path="monitor" element={<Monitor />} />
+          </Route>
+          
+          {/* 404 Route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
