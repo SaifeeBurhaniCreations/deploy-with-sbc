@@ -17,6 +17,8 @@ import Login from "./pages/Login";
 import EditDeploymentSettings from "./pages/EditDeploymentSettings";
 import ConfigureDomain from "./pages/ConfigureDomain";
 import SitePreview from "./pages/SitePreview";
+import Marketplace from "./pages/Marketplace";
+import TemplateDetail from "./pages/TemplateDetail";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +43,8 @@ const App = () => (
             <Route path="edit-settings" element={<EditDeploymentSettings />} />
             <Route path="domain" element={<ConfigureDomain />} />
             <Route path="preview" element={<SitePreview />} />
+            <Route path="marketplace" element={<Marketplace />} />
+            <Route path="templates/:id" element={<TemplateDetail />} />
           </Route>
           
           {/* 404 Route */}
