@@ -74,8 +74,7 @@ const Settings = () => {
   const handleNextStep = () => {
     if (currentStep === STEPS.CHOOSE_METHOD) {
       if (reconnectMethod === 'oauth') {
-        // Simulate OAuth flow and move to repo selection
-        setTimeout(() => {
+          setTimeout(() => {
           setCurrentStep(STEPS.SELECT_REPO);
         }, 1000);
       } else if (reconnectMethod === 'manual') {

@@ -171,7 +171,7 @@ export default function Product({ product }) {
     <div className="product-card">
       <img src={product.image} alt={product.name} />
       <h3>{product.name}</h3>
-      <p>${product.price}</p>
+      <p>{product.price}</p>
       <button onClick={() => addToCart(product)}>
         Add to Cart
       </button>
@@ -199,7 +199,6 @@ const TemplateDetail = () => {
   const { toast } = useToast();
   const template = templateData[id as keyof typeof templateData];
   
-  // Handle case where template doesn't exist
   if (!template) {
     return (
       <div className="flex flex-col items-center justify-center h-[70vh]">
@@ -221,11 +220,10 @@ const TemplateDetail = () => {
       title: "Template selected",
       description: `You've chosen the ${template.name} template. Setting up...`,
     });
-    // Here you would redirect to the setup flow or deployment page
   };
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" style={{overflowY: "auto", maxHeight: "85vh"}}>
       <div className="flex items-center justify-between">
         <div>
           <Link to="/dashboard/marketplace" className="text-sm text-blue-600 hover:text-blue-800 flex items-center mb-2">
