@@ -71,10 +71,16 @@ const Settings = () => {
     setCurrentStep(STEPS.CHOOSE_METHOD);
   };
 
-  const handleNextStep = () => {
+  const handleNextStep = (e?: React.MouseEvent) => {
+    // Prevent default behavior to avoid triggering AlertDialog close
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
     if (currentStep === STEPS.CHOOSE_METHOD) {
       if (reconnectMethod === 'oauth') {
-          setTimeout(() => {
+        setTimeout(() => {
           setCurrentStep(STEPS.SELECT_REPO);
         }, 1000);
       } else if (reconnectMethod === 'manual') {

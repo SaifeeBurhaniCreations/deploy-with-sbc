@@ -7,6 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Search, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useToast } from '@/hooks/use-toast';
 
 // Mock templates data
 const allTemplates = [
@@ -119,6 +122,19 @@ const Marketplace = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeTab, setActiveTab] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
+  const { toast } = useToast();
+  
+  // Import state
+  const [importDialogOpen, setImportDialogOpen] = useState(false);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
+  const [importStep, setImportStep] = useState(1);
+  const [importSettings, setImportSettings] = useState({
+    branch: 'main',
+    buildCommand: 'npm build',
+    installDependencies: true,
+    configureEnvironment: false
+  });
+  const [importProgress, setImportProgress] = useState(0);
   
   // Filter templates based on search, category, and active tab
   const filteredTemplates = allTemplates.filter(template => {
@@ -150,6 +166,163 @@ const Marketplace = () => {
     setCurrentPage(page);
     // Scroll to top on page change
     window.scrollTo(0, 0);
+  };
+
+  // Import handlers
+  const handleImportClick = (templateId: string) => {
+    setSelectedTemplateId(templateId);
+    setImportStep(1);
+    setImportProgress(0);
+    setImportDialogOpen(true);
+  };
+
+  const handleNextImportStep = () => {
+    if (importStep < 3) {
+      setImportStep(importStep + 1);
+    } else {
+      // Start the import process
+      simulateImport();
+    }
+  };
+
+  const simulateImport = () => {
+    // This would be replaced with actual import logic
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 10;
+      setImportProgress(progress);
+      
+      if (progress >= 100) {
+        clearInterval(interval);
+        setImportDialogOpen(false);
+        const template = allTemplates.find(t => t.id === selectedTemplateId);
+        
+        toast({
+          title: "Import Successful",
+          description: `${template?.name} has been imported successfully.`,
+        });
+      }
+    }, 500);
+  };
+  
+  const selectedTemplate = allTemplates.find(t => t.id === selectedTemplateId);
+
+  // Import dialog content based on step
+  const renderImportStep = () => {
+    switch(importStep) {
+      case 1:
+        return (
+          <div className="space-y-4">
+            <div className="border rounded-md p-4 bg-slate-50">
+              <div className="flex items-center gap-3">
+                <div className="text-2xl">{selectedTemplate?.icon}</div>
+                <div>
+                  <h3 className="font-medium">{selectedTemplate?.name}</h3>
+                  <p className="text-sm text-slate-600">{selectedTemplate?.description}</p>
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-slate-600">
+              You are about to import this template. In the next steps, you can configure how you want to set it up.
+            </p>
+            <div className="flex items-center space-x-2 pt-2">
+              <Checkbox id="confirm" />
+              <label htmlFor="confirm" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                I understand this will create a new project using this template
+              </label>
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="space-y-4">
+            <p className="text-sm text-slate-600 mb-4">
+              Configure your import settings:
+            </p>
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <label htmlFor="branch" className="text-sm font-medium">Branch</label>
+                <Input 
+                  id="branch" 
+                  value={importSettings.branch} 
+                  onChange={(e) => setImportSettings({...importSettings, branch: e.target.value})} 
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="buildCommand" className="text-sm font-medium">Build Command</label>
+                <Input 
+                  id="buildCommand" 
+                  value={importSettings.buildCommand} 
+                  onChange={(e) => setImportSettings({...importSettings, buildCommand: e.target.value})} 
+                />
+              </div>
+              <div className="flex items-center space-x-2 pt-2">
+                <Checkbox 
+                  id="installDeps" 
+                  checked={importSettings.installDependencies} 
+                  onCheckedChange={(checked) => 
+                    setImportSettings({...importSettings, installDependencies: checked === true})
+                  }
+                />
+                <label htmlFor="installDeps" className="text-sm font-medium leading-none">
+                  Automatically install dependencies
+                </label>
+              </div>
+              <div className="flex items-center space-x-2 pt-2">
+                <Checkbox 
+                  id="configEnv" 
+                  checked={importSettings.configureEnvironment} 
+                  onCheckedChange={(checked) => 
+                    setImportSettings({...importSettings, configureEnvironment: checked === true})
+                  }
+                />
+                <label htmlFor="configEnv" className="text-sm font-medium leading-none">
+                  Configure environment variables
+                </label>
+              </div>
+            </div>
+          </div>
+        );
+      case 3:
+        return (
+          <div className="space-y-4">
+            <div className="border rounded-md p-4 bg-green-50 border-green-100">
+              <h3 className="font-medium text-green-800 flex items-center">
+                <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Ready to import
+              </h3>
+              <p className="text-sm text-green-700 mt-1">
+                Your template is ready to be imported with the selected settings.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium">Import Summary</h4>
+              <div className="text-sm space-y-1">
+                <p><span className="font-medium">Template:</span> {selectedTemplate?.name}</p>
+                <p><span className="font-medium">Branch:</span> {importSettings.branch}</p>
+                <p><span className="font-medium">Build Command:</span> {importSettings.buildCommand}</p>
+                <p><span className="font-medium">Install Dependencies:</span> {importSettings.installDependencies ? 'Yes' : 'No'}</p>
+                <p><span className="font-medium">Configure Environment:</span> {importSettings.configureEnvironment ? 'Yes' : 'No'}</p>
+              </div>
+            </div>
+            {importProgress > 0 && (
+              <div className="space-y-2">
+                <div className="text-sm font-medium">Importing... {importProgress}%</div>
+                <div className="w-full bg-slate-200 rounded-full h-2">
+                  <div 
+                    className="bg-primary h-2 rounded-full" 
+                    style={{ width: `${importProgress}%` }}
+                  ></div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      default:
+        return null;
+    }
   };
   
   return (
@@ -228,9 +401,9 @@ const Marketplace = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 {paginatedTemplates.map(template => (
-                  <Link key={template.id} to={`/dashboard/templates/${template.id}`}>
-                    <Card className="h-full overflow-hidden hover:border-primary hover:shadow-md transition-all">
-                      <div className="aspect-[16/9] w-full bg-slate-100 overflow-hidden">
+                  <Card key={template.id} className="h-full overflow-hidden hover:border-primary hover:shadow-md transition-all">
+                    <div className="aspect-[16/9] w-full bg-slate-100 overflow-hidden">
+                      <Link to={`/dashboard/templates/${template.id}`}>
                         <img 
                           src={template.image} 
                           alt={template.name} 
@@ -239,31 +412,39 @@ const Marketplace = () => {
                             (e.target as HTMLImageElement).src = 'https://placehold.co/400x225?text=Template+Preview';
                           }}
                         />
-                      </div>
-                      <CardHeader className="pb-2">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="text-2xl">{template.icon}</span>
-                            <CardTitle className="text-lg">{template.name}</CardTitle>
+                      </Link>
+                    </div>
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl">{template.icon}</span>
+                          <Link to={`/dashboard/templates/${template.id}`}>
+                            <CardTitle className="text-lg hover:text-primary transition-colors">{template.name}</CardTitle>
+                          </Link>
+                        </div>
+                        {(template.popular || template.new) && (
+                          <div>
+                            {template.new && <Badge className="bg-blue-500">New</Badge>}
+                            {template.popular && <Badge className="ml-1 bg-amber-500">Popular</Badge>}
                           </div>
-                          {(template.popular || template.new) && (
-                            <div>
-                              {template.new && <Badge className="bg-blue-500">New</Badge>}
-                              {template.popular && <Badge className="ml-1 bg-amber-500">Popular</Badge>}
-                            </div>
-                          )}
-                        </div>
-                        <CardDescription>{template.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex flex-wrap gap-1">
-                          {template.tags.map((tag, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">{tag}</Badge>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
+                        )}
+                      </div>
+                      <CardDescription>{template.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-wrap gap-1 mb-3">
+                        {template.tags.map((tag, index) => (
+                          <Badge key={index} variant="outline" className="text-xs">{tag}</Badge>
+                        ))}
+                      </div>
+                      <div className="flex justify-between items-center mt-2">
+                        <Link to={`/dashboard/templates/${template.id}`} className="text-sm text-primary hover:underline flex items-center">
+                          View details <ChevronRight className="h-3 w-3 ml-1" />
+                        </Link>
+                        <Button size="sm" onClick={() => handleImportClick(template.id)}>Import</Button>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
               
@@ -314,6 +495,65 @@ const Marketplace = () => {
           )}
         </div>
       </div>
+
+      {/* Import Dialog */}
+      <Dialog open={importDialogOpen} onOpenChange={setImportDialogOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>
+              {importStep === 1 ? "Import Template" : 
+               importStep === 2 ? "Configure Import" : 
+               "Confirm Import"}
+            </DialogTitle>
+            <DialogDescription>
+              {importStep === 1 ? "Start using this template in your project." : 
+               importStep === 2 ? "Configure how you want to import this template." : 
+               "Review and confirm your import settings."}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {/* Step Progress Indicator */}
+          <div className="flex items-center justify-between my-4">
+            {[1, 2, 3].map(step => (
+              <div key={step} className="flex flex-col items-center">
+                <div 
+                  className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                    importStep >= step ? 'bg-primary text-primary-foreground' : 'bg-slate-100 text-slate-500'
+                  }`}
+                >
+                  {step}
+                </div>
+                <span className="text-xs mt-1 text-slate-500">
+                  {step === 1 ? 'Select' : step === 2 ? 'Configure' : 'Confirm'}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Content based on step */}
+          <div className="py-4">
+            {renderImportStep()}
+          </div>
+          
+          <DialogFooter>
+            {importStep > 1 && importProgress === 0 && (
+              <Button 
+                variant="outline" 
+                onClick={() => setImportStep(importStep - 1)}
+              >
+                Back
+              </Button>
+            )}
+            <Button 
+              onClick={handleNextImportStep}
+              disabled={importProgress > 0 && importProgress < 100}
+            >
+              {importProgress > 0 ? 'Importing...' : 
+               importStep < 3 ? 'Next' : 'Import Template'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
