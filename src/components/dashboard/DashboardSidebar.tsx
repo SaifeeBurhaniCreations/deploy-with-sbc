@@ -1,12 +1,13 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, PlusCircle, Activity, Shield, Settings, LogOut } from 'lucide-react';
+import { Home, PlusCircle, Activity, Shield, Settings, LogOut, ShoppingCart } from 'lucide-react';
 
 const navItems = [
   { name: 'Dashboard', path: '/dashboard', icon: Home },
   { name: 'New Deployment', path: '/dashboard/deploy', icon: PlusCircle },
   { name: 'Monitoring', path: '/dashboard/monitor', icon: Activity },
+  { name: 'Marketplace', path: '/dashboard/marketplace', icon: ShoppingCart },
   { name: 'Admin', path: '/dashboard/admin', icon: Shield },
   { name: 'Settings', path: '/dashboard/settings', icon: Settings },
 ];

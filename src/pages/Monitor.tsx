@@ -1,5 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -78,6 +78,7 @@ const statusDetails = {
 };
 
 const Monitor = () => {
+  const navigate = useNavigate();
   const [deployments, setDeployments] = useState(mockDeployments);
   const [lastRefresh, setLastRefresh] = useState(new Date());
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -108,6 +109,10 @@ const Monitor = () => {
     
     return () => clearInterval(interval);
   }, [deployments]);
+
+  const handleSiteClick = (deploymentId: string) => {
+    navigate(`/dashboard/analytics/${deploymentId}`);
+  };
 
   return (
     <div className="space-y-6" style={{overflowY: "auto", maxHeight: "85vh"}}>
@@ -198,12 +203,17 @@ const Monitor = () => {
                     <tr key={deployment.id} className="border-b border-slate-100">
                       <td className="py-3 px-4">
                         <div>
-                          <p className="font-medium">{deployment.name}</p>
+                          <button 
+                            onClick={() => handleSiteClick(deployment.id)}
+                            className="font-medium text-tech-blue hover:underline cursor-pointer"
+                          >
+                            {deployment.name}
+                          </button>
                           <a 
                             href={`https://${deployment.subdomain}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs text-slate-500 hover:text-tech-blue hover:underline"
+                            className="block text-xs text-slate-500 hover:text-tech-blue hover:underline"
                           >
                             {deployment.subdomain}
                           </a>

@@ -19,6 +19,7 @@ import ConfigureDomain from "./pages/ConfigureDomain";
 import SitePreview from "./pages/SitePreview";
 import Marketplace from "./pages/Marketplace";
 import TemplateDetail from "./pages/TemplateDetail";
+import Analytics from "./pages/Analytics";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="deployment/:id" element={<DeploymentStatus />} />
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="monitor" element={<Monitor />} />
+            <Route path="analytics/:siteId" element={<Analytics />} />
             <Route path="settings" element={<Settings />} />
             <Route path="edit-settings" element={<EditDeploymentSettings />} />
             <Route path="domain" element={<ConfigureDomain />} />
