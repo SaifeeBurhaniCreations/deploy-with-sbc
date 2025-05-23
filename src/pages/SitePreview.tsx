@@ -7,7 +7,8 @@ import { ExternalLink, RefreshCw } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const SitePreview = () => {
-  const [url, setUrl] = useState('https://demo.sbc-deploy.com');
+  const [url, setUrl] = useState('http://localhost:8080');
+  // const [url, setUrl] = useState('https://demo.sbc-deploy.com');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState('desktop');
   const { toast } = useToast();

@@ -7,17 +7,24 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/sonner';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { GitBranch, Github } from 'lucide-react';
+import { GitBranch, Github, ChevronRight } from 'lucide-react';
 
 const frameworks = [
-  { id: 'nextjs', name: 'Next.js' },
+  { id: 'expo', name: 'Expo' },
   { id: 'vite', name: 'Vite' },
-  { id: 'cra', name: 'Create React App' },
-  { id: 'svelte', name: 'SvelteKit' },
-  { id: 'nuxt', name: 'Nuxt.js' },
+  { id: 'nextjs', name: 'Next.js' },
+  { id: 'reactnative', name: 'React Native' },
+  { id: 'electronjs', name: 'Electron.js' },
+  { id: 'angularjs', name: 'Angular.js' },
   { id: 'express', name: 'Express' },
   { id: 'django', name: 'Django' },
-  { id: 'rails', name: 'Ruby on Rails' },
+];
+
+const templates = [
+  { id: 'template1', name: 'Next.js', description: 'The React framework for production', icon: '📦' },
+  { id: 'template2', name: 'AI Chatbot', description: 'Conversational AI chatbot starter', icon: '🤖' },
+  { id: 'template3', name: 'Vite + React', description: 'Frontend tooling with React', icon: '⚡' },
+  { id: 'template4', name: 'Commerce', description: 'E-commerce starter kit', icon: '🛒' },
 ];
 
 const DeployNew = () => {
@@ -52,13 +59,16 @@ const DeployNew = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" style={{overflowY: "auto", maxHeight: "85vh"}}>
       <div>
         <h1 className="text-2xl font-bold">Deploy New Application</h1>
         <p className="text-slate-600">Configure and deploy a new app to SBC-Deploy</p>
       </div>
-      
-      <Card style={{width: "50vw"}}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - Create Deployment */}
+      <div className="lg:col-span-2 space-y-6">
+      <Card> 
+      {/* style={{width: "50vw"}} */}
         <CardHeader>
           <CardTitle>Deployment Configuration</CardTitle>
           <CardDescription>
@@ -170,6 +180,70 @@ const DeployNew = () => {
           </form>
         </CardContent>
       </Card>
+      </div>
+              {/* Right Column - Clone Template */}
+              <div className="lg:col-span-1">
+          <Card>
+            <CardHeader>
+              <CardTitle>Clone Template</CardTitle>
+              <CardDescription>
+                Start with a pre-configured template
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {templates.map(template => (
+                <div 
+                  key={template.id} 
+                  className="p-4 border rounded-md hover:border-primary cursor-pointer transition-colors flex items-center justify-between group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="text-2xl">{template.icon}</div>
+                    <div>
+                      <h3 className="font-medium">{template.name}</h3>
+                      <p className="text-sm text-slate-600">{template.description}</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-slate-400 group-hover:text-primary transition-colors" />
+                </div>
+              ))}
+              
+              <Button variant="outline" className="w-full">
+                Browse More Templates
+              </Button>
+            </CardContent>
+          </Card>
+          
+          {/* Additional Settings Card */}
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>Advanced Options</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium">Enable API Access</p>
+                  <p className="text-sm text-slate-600">Allow programmatic access via API</p>
+                </div>
+                <Switch />
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium">Webhook Notifications</p>
+                  <p className="text-sm text-slate-600">Send deployment events to webhooks</p>
+                </div>
+                <Switch />
+              </div>
+              
+              <Button variant="outline" className="w-full">
+                View API Documentation
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+
     </div>
   );
 };
