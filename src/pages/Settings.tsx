@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { useNavigate } from 'react-router-dom';
 
 // Mock data for demo purposes
 const organizations = [
@@ -60,6 +61,8 @@ const Settings = () => {
   const [selectedRepo, setSelectedRepo] = useState<string | null>(null);
   
   const { toast } = useToast();
+
+  const navigate = useNavigate();
 
   const filteredRepos = repositories.filter(repo =>
     repo.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -430,7 +433,7 @@ const Settings = () => {
                 </div>
               ))}
               
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full" onClick={() => navigate("/dashboard/marketplace")}>
                 Browse More Templates
               </Button>
             </CardContent>
