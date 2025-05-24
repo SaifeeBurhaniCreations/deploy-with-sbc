@@ -42,8 +42,8 @@ const DeploymentStatus = () => {
       } else if (currentStage === deploymentStages.length - 1 && !isComplete) {
         setIsComplete(true);
         setLogs(prev => [...prev, `✅ ${deploymentStages[currentStage].name} completed`]);
-        setLogs(prev => [...prev, '🚀 Deployment complete! Your app is now live.']);
-        setDeploymentUrl('https://client-app.sbc-deploy.com');
+        setLogs(prev => [...prev, '🚀 Deployment complete! Your app is now live at https://client-app.sbcws-deploy.com.']);
+        setDeploymentUrl('https://client-app.sbcws-deploy.com');
       }
     }, 2000);
     

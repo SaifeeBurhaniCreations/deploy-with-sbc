@@ -74,7 +74,7 @@ const DomainWizard = ({ onComplete, onCancel }: DomainWizardProps) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" style={{ overflowY: "auto", maxHeight: "85vh"}}>
       {/* Progress Steps */}
       <div className="space-y-4">
         <div className="flex justify-between items-center">

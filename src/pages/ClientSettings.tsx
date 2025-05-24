@@ -67,7 +67,7 @@ const ClientSettings = () => {
   const handleRequestUpgrade = () => {
     toast({
       title: "Upgrade request submitted",
-      description: "Your account manager will contact you within 24 hours",
+      description: "SBC manager will contact you within 24 hours",
     });
   };
 
