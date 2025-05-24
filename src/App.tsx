@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,6 +19,11 @@ import SitePreview from "./pages/SitePreview";
 import Marketplace from "./pages/Marketplace";
 import TemplateDetail from "./pages/TemplateDetail";
 import Analytics from "./pages/Analytics";
+import ClientLogin from "./pages/ClientLogin";
+import ClientDashboard from "./pages/ClientDashboard";
+import ClientInfrastructure from "./pages/ClientInfrastructure";
+import ClientBilling from "./pages/ClientBilling";
+import ClientDashboardLayout from "./components/client/ClientDashboardLayout";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +36,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/client-login" element={<ClientLogin />} />
           
           {/* Dashboard Routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
@@ -47,6 +52,13 @@ const App = () => (
             <Route path="preview" element={<SitePreview />} />
             <Route path="marketplace" element={<Marketplace />} />
             <Route path="templates/:id" element={<TemplateDetail />} />
+          </Route>
+
+          {/* Client Dashboard Routes */}
+          <Route path="/client-dashboard" element={<ClientDashboardLayout />}>
+            <Route index element={<ClientDashboard />} />
+            <Route path="infrastructure" element={<ClientInfrastructure />} />
+            <Route path="billing" element={<ClientBilling />} />
           </Route>
           
           {/* 404 Route */}
