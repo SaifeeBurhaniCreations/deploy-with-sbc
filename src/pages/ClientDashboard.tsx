@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, TrendingDown, Server, DollarSign, Activity, AlertTriangle } from 'lucide-react';
+import { TrendingUp, TrendingDown, Server, DollarSign, Activity, AlertTriangle, MessageCircle, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const stats = [
   {
@@ -43,6 +43,8 @@ const recentActivity = [
 ];
 
 const ClientDashboard = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-6">
       <div>
@@ -117,28 +119,40 @@ const ClientDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-3">
-              <button className="p-4 text-left border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                <Server className="h-5 w-5 text-tech-blue mb-2" />
-                <p className="font-medium text-sm">View Infrastructure</p>
-                <p className="text-xs text-slate-600">Check AWS resources</p>
+              <button 
+                className="p-4 text-left border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                onClick={() => navigate('/client-dashboard/analytics')}
+              >
+                <Activity className="h-5 w-5 text-tech-blue mb-2" />
+                <p className="font-medium text-sm">Analytics</p>
+                <p className="text-xs text-slate-600">Performance metrics</p>
               </button>
               
-              <button className="p-4 text-left border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+              <button 
+                className="p-4 text-left border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                onClick={() => navigate('/client-dashboard/billing')}
+              >
                 <DollarSign className="h-5 w-5 text-green-600 mb-2" />
                 <p className="font-medium text-sm">Billing Details</p>
                 <p className="text-xs text-slate-600">View usage & costs</p>
               </button>
               
-              <button className="p-4 text-left border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                <TrendingUp className="h-5 w-5 text-purple-600 mb-2" />
-                <p className="font-medium text-sm">Analytics</p>
-                <p className="text-xs text-slate-600">Performance metrics</p>
+              <button 
+                className="p-4 text-left border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                onClick={() => navigate('/client-dashboard/support')}
+              >
+                <MessageCircle className="h-5 w-5 text-purple-600 mb-2" />
+                <p className="font-medium text-sm">Support</p>
+                <p className="text-xs text-slate-600">Get help & tickets</p>
               </button>
               
-              <button className="p-4 text-left border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                <AlertTriangle className="h-5 w-5 text-orange-600 mb-2" />
-                <p className="font-medium text-sm">Support</p>
-                <p className="text-xs text-slate-600">Get help</p>
+              <button 
+                className="p-4 text-left border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                onClick={() => navigate('/client-dashboard/settings')}
+              >
+                <Settings className="h-5 w-5 text-orange-600 mb-2" />
+                <p className="font-medium text-sm">Settings</p>
+                <p className="text-xs text-slate-600">Manage account</p>
               </button>
             </div>
           </CardContent>
