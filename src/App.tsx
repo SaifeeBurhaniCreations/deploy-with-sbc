@@ -1,4 +1,5 @@
 
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -26,6 +27,7 @@ import ClientInfrastructure from "./pages/ClientInfrastructure";
 import ClientBilling from "./pages/ClientBilling";
 import ClientAnalytics from "./pages/ClientAnalytics";
 import ClientSupport from "./pages/ClientSupport";
+import ClientSecurity from "./pages/ClientSecurity";
 import ClientSettings from "./pages/ClientSettings";
 import ClientDashboardLayout from "./components/client/ClientDashboardLayout";
 
@@ -65,6 +67,7 @@ const App = () => (
             <Route path="infrastructure" element={<ClientInfrastructure />} />
             <Route path="billing" element={<ClientBilling />} />
             <Route path="support" element={<ClientSupport />} />
+            <Route path="security" element={<ClientSecurity />} />
             <Route path="settings" element={<ClientSettings />} />
           </Route>
           
