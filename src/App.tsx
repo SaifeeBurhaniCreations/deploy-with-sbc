@@ -1,5 +1,4 @@
 
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,6 +9,8 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import DeployNew from "./pages/DeployNew";
+import DeployNewEnhanced from "./pages/DeployNewEnhanced";
+import Files from "./pages/Files";
 import DeploymentStatus from "./pages/DeploymentStatus";
 import AdminDashboard from "./pages/AdminDashboard";
 import Monitor from "./pages/Monitor";
@@ -48,6 +49,8 @@ const App = () => (
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="deploy" element={<DeployNew />} />
+            <Route path="deploy-enhanced" element={<DeployNewEnhanced />} />
+            <Route path="files" element={<Files />} />
             <Route path="deployment/:id" element={<DeploymentStatus />} />
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="monitor" element={<Monitor />} />
