@@ -11,7 +11,6 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 
-// Mock templates data
 const allTemplates = [
   {
     id: 'template1',
@@ -103,7 +102,6 @@ const allTemplates = [
   }
 ];
 
-// Categories for filtering
 const categories = [
   { id: 'all', name: 'All Templates' },
   { id: 'frameworks', name: 'Frameworks' },
@@ -124,7 +122,6 @@ const Marketplace = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { toast } = useToast();
   
-  // Import state
   const [importDialogOpen, setImportDialogOpen] = useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   const [importStep, setImportStep] = useState(1);
@@ -136,17 +133,13 @@ const Marketplace = () => {
   });
   const [importProgress, setImportProgress] = useState(0);
   
-  // Filter templates based on search, category, and active tab
   const filteredTemplates = allTemplates.filter(template => {
-    // Search filter
     const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                          template.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          template.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
     
-    // Category filter
     const matchesCategory = activeCategory === 'all' || template.category === activeCategory;
     
-    // Tab filter (all, popular, new)
     const matchesTab = 
       activeTab === 'all' || 
       (activeTab === 'popular' && template.popular) ||
@@ -155,7 +148,6 @@ const Marketplace = () => {
     return matchesSearch && matchesCategory && matchesTab;
   });
   
-  // Pagination
   const totalPages = Math.ceil(filteredTemplates.length / ITEMS_PER_PAGE);
   const paginatedTemplates = filteredTemplates.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -164,11 +156,9 @@ const Marketplace = () => {
   
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // Scroll to top on page change
     window.scrollTo(0, 0);
   };
 
-  // Import handlers
   const handleImportClick = (templateId: string) => {
     setSelectedTemplateId(templateId);
     setImportStep(1);
@@ -180,13 +170,11 @@ const Marketplace = () => {
     if (importStep < 3) {
       setImportStep(importStep + 1);
     } else {
-      // Start the import process
       simulateImport();
     }
   };
 
   const simulateImport = () => {
-    // This would be replaced with actual import logic
     let progress = 0;
     const interval = setInterval(() => {
       progress += 10;
@@ -207,7 +195,6 @@ const Marketplace = () => {
   
   const selectedTemplate = allTemplates.find(t => t.id === selectedTemplateId);
 
-  // Import dialog content based on step
   const renderImportStep = () => {
     switch(importStep) {
       case 1:
