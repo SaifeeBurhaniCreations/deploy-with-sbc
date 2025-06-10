@@ -271,7 +271,7 @@ const DeployNewEnhanced = () => {
               <Button 
                 variant="outline" 
                 className="w-full justify-start"
-                onClick={() => navigate('/files')}
+                onClick={() => navigate('/dashboard/files')}
               >
                 <Folder className="h-4 w-4 mr-2" />
                 Manage Files
